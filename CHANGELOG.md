@@ -1,6 +1,63 @@
 # Changelog
 
 
+## [1.9.0](https://github.com/bstef/nerdlog/compare/v1.8.1...v1.9.0) (2025-05-21)
+
+
+### Features
+
+* Add support for shell init commands in logstream config ([c5d756f](https://github.com/bstef/nerdlog/commit/c5d756f4b6b170f99ee0306011d6767809fb4e13))
+* Add version info ([1706904](https://github.com/bstef/nerdlog/commit/1706904aa0733a239f0cd2322e0142b8369b1306))
+* **CI:** Add version number to the archive names ([78e4e80](https://github.com/bstef/nerdlog/commit/78e4e80359eace22a61f88c24e4d42b9744eefde))
+* **CI:** run tests on CI ([17aaf4d](https://github.com/bstef/nerdlog/commit/17aaf4d944fdb85fe637c150f9c6d0021a850142))
+* **CI:** run tests on CI FreeBSD ([3a24a77](https://github.com/bstef/nerdlog/commit/3a24a778ddac247af3e36070d09e1b72bd6fcab9))
+* **CI:** run tests on CI MacOS ([d1cafc4](https://github.com/bstef/nerdlog/commit/d1cafc42a7e0c1aa0819f76d6689ded151d52a65))
+* **CI:** set up release-please with auto binaries building for releases ([2a9d235](https://github.com/bstef/nerdlog/commit/2a9d2353d3050e75d727825c6db86d09229b5d97))
+* Debug-print command to filter logs by time range ([aa164b2](https://github.com/bstef/nerdlog/commit/aa164b289217b6be8919ad7ed83460102d005ee5))
+* Don't fail if there is a Match directive in ssh config ([3dad67c](https://github.com/bstef/nerdlog/commit/3dad67ceb5e6314ca51a3daf051ba52a62da444f))
+* Handle decreased timestamps gracefully ([136890b](https://github.com/bstef/nerdlog/commit/136890b0c7572963aec9225c91a2f31911970179))
+* Implement hard refresh using Alt+Ctrl+R or Shift+F5 ([6799aca](https://github.com/bstef/nerdlog/commit/6799aca0844e384e882566938d9cf5f5dc5c98eb))
+* Implement proper support for localhost ([82425bf](https://github.com/bstef/nerdlog/commit/82425bfe4b53494e217030d96efe335f6affe5be))
+* Implement refresh using Ctrl+R or F5 ([6c95ca5](https://github.com/bstef/nerdlog/commit/6c95ca5716212f5a22f946a31a60726f9769608f))
+* Implement ssh authentication via public keys ([435eeab](https://github.com/bstef/nerdlog/commit/435eeab28bd48dbb71c3cd86647e11a32e8dce78))
+* Make the histogram cursor and ruler lighter ([b0d6e21](https://github.com/bstef/nerdlog/commit/b0d6e212e263377f8ed1d5afb96877d90f9f903d))
+* **minor:** Add a bit more debug info ([d696530](https://github.com/bstef/nerdlog/commit/d69653095f2cf59399a8ee9e18b258119c27b5b3))
+* **minor:** Add GOOS and clipboard info to --version output ([256e334](https://github.com/bstef/nerdlog/commit/256e3343711a13dcbe0f80dd66719135b7cd7ea9))
+* Resize the connection dialog when needed ([e85811f](https://github.com/bstef/nerdlog/commit/e85811f4e03c756a717b874a8f6a43f8dae3cb13))
+* Respect TZ env var if available ([66fb307](https://github.com/bstef/nerdlog/commit/66fb30729ef94b588727f291f2d4664394cdcfe2))
+* **UI:** Add a way to copy message to clipboard ([fa44568](https://github.com/bstef/nerdlog/commit/fa44568d7eb3abd9f4a12bd91a542770bb7f05ba))
+* **UI:** Implement debug info dialog ([bc3f8e3](https://github.com/bstef/nerdlog/commit/bc3f8e3a041ba341b0c463d32e92b1ba308efd93))
+
+
+### Bug Fixes
+
+* Avoid panic if nerdlog was built with CGO_ENABLED=0 ([389a193](https://github.com/bstef/nerdlog/commit/389a193836b8e07de71cf7f9bf39fb8441e2871b))
+* **CI:** Don't set CGO_ENABLED=0 ([201f621](https://github.com/bstef/nerdlog/commit/201f621f8d7c2472a098051dc4b93a233874f395))
+* **CI:** Fix the path to main package ([2ae940b](https://github.com/bstef/nerdlog/commit/2ae940b851bcb56c058c2286bc43b589a684c80d))
+* **CI:** Install libx11-dev to the runner ([adde3f5](https://github.com/bstef/nerdlog/commit/adde3f5a12d79ced4ad5c5b8dcdbdff568086147))
+* Don't assume that bash is in /bin ([ddcde2b](https://github.com/bstef/nerdlog/commit/ddcde2bdacc2d9d4140f3490ef463d10a8f0ca0e))
+* Don't use localhost as a default on Windows ([03e7d96](https://github.com/bstef/nerdlog/commit/03e7d96dccef4e685b6c362c38f7d7888b25fc46))
+* Fix FreeBSD build with CGO_ENABLED=1 ([db2665f](https://github.com/bstef/nerdlog/commit/db2665fc4ab68a772833cd34a2d016ed0dcaa74d))
+* Fix journalctl pagination with the pattern ([8c85b16](https://github.com/bstef/nerdlog/commit/8c85b16428ea414a687c0bc812071c9567a58483))
+* Fix pagination of journalctl-powered logstreams ([f7e373e](https://github.com/bstef/nerdlog/commit/f7e373e0e2c119ddc662593b2af45909319d992f))
+* Fix time format for older versions of journalctl ([528974d](https://github.com/bstef/nerdlog/commit/528974d988d633d9b0a000c18b9e05f42d6f8caa))
+* Forget queued commands when reconnecting ([04cbe37](https://github.com/bstef/nerdlog/commit/04cbe3725f818ec6617e7888e97bf8bfc7bf644d))
+* Handle multiline records from journalctl ([af591a0](https://github.com/bstef/nerdlog/commit/af591a089ee66b0f5d8cba411faaea4dd15c56e3))
+* Let nerdlog start without ssh-agent ([35ae609](https://github.com/bstef/nerdlog/commit/35ae609f81445094590ac26c3e94633baa53652d))
+* Make Makefile compabible with FreeBSD ([d8776b6](https://github.com/bstef/nerdlog/commit/d8776b6238d479a91555f7b887f791e445cc94c1))
+* Make sure that the agent script is in home dir ([6885b88](https://github.com/bstef/nerdlog/commit/6885b88b34b34a0f1b4bda3ea3275fbfce271ddb))
+* Make the agent script work on FreeBSD ([bcb3ac4](https://github.com/bstef/nerdlog/commit/bcb3ac4206722aa98f80b9e567771c5ba371a878))
+* **minor:** Debug-print the skipped-lines info to stderr ([920f57e](https://github.com/bstef/nerdlog/commit/920f57e74cd171cd56c8bc6308a384f5bb81f5d9))
+* **minor:** Improve version info generated by make ([564a20f](https://github.com/bstef/nerdlog/commit/564a20fc45fbc7e6e46ccf5496395bb7ab66e01e))
+* **minor:** Sort connection errors by host ([1612e91](https://github.com/bstef/nerdlog/commit/1612e913f1dc4126b212a7632664a5b686322fb6))
+* Support ancient bash shipped with MacOS ([4c5edd5](https://github.com/bstef/nerdlog/commit/4c5edd5eb5bea8769644d3885f64b8c59a5837d0))
+* **UI:** Apply the timezone changes everywhere in UI ([8b523f6](https://github.com/bstef/nerdlog/commit/8b523f6be63c26d736bc4baa956bba5717c8e0fb))
+* **UI:** Fix messagebox height if text has empty lines ([ae72eec](https://github.com/bstef/nerdlog/commit/ae72eec086e11a4fa146620d8773d4a7979dd088))
+* **UI:** Fix timezone label in query edit form ([e3d7f26](https://github.com/bstef/nerdlog/commit/e3d7f26a2e8b40e206bf1cb021f1a6de1a174f4d))
+* **UI:** Make the right edge of the ruler correct in all cases ([c04005b](https://github.com/bstef/nerdlog/commit/c04005b9c70ec7774061e022a346580c0c8312ed))
+* Upgrade clipboard package to fix init error handling ([313a4f7](https://github.com/bstef/nerdlog/commit/313a4f7ff25629c88ada36a363297e4b7075c1a3))
+* Use /bin/sh as the main ssh session shell ([10e3551](https://github.com/bstef/nerdlog/commit/10e355177a065f9228f14ed0151edcbe1b547bb7))
+
 ## [1.8.1](https://github.com/dimonomid/nerdlog/compare/v1.8.0...v1.8.1) (2025-05-20)
 
 
