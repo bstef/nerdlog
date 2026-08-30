@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/dimonomid/clock"
 	"github.com/dimonomid/nerdlog/clhistory"
 	"github.com/dimonomid/nerdlog/clipboard"
 	"github.com/dimonomid/nerdlog/cmd/nerdlog/ui"
@@ -38,6 +39,7 @@ type MainViewParams struct {
 	App *tview.Application
 
 	Options *OptionsShared
+	Clock   clock.Clock
 
 	// OnLogQuery is called by MainView whenever the user submits a query to get
 	// logs.
@@ -219,6 +221,10 @@ var (
 )
 
 func NewMainView(params *MainViewParams) *MainView {
+	if params.Clock == nil {
+		params.Clock = clock.New()
+	}
+
 	params.Logger = params.Logger.WithNamespaceAppended("MainView")
 
 	mv := &MainView{
@@ -984,7 +990,7 @@ func (mv *MainView) queryInputApplyStyle() {
 func (mv *MainView) applyQueryEditData(data QueryFull, dqp doQueryParams) error {
 	tz := mv.params.Options.GetTimezone()
 
-	ftr, err := ParseFromToRange(tz, data.Time)
+	ftr, err := ParseFromToRange(tz, mv.params.Clock.Now(), data.Time)
 	if err != nil {
 		return errors.Annotatef(err, "time")
 	}
@@ -1258,7 +1264,7 @@ func (mv *MainView) updateTableHeader(msgs []core.LogMsg) (colNames []string) {
 
 		// Special case for the time column. Pretty dirty, but will do for now.
 		if fld.Name == "time" {
-			displayName = fmt.Sprintf("time (%s)", mv.timezoneStr(time.Now()))
+			displayName = fmt.Sprintf("time (%s)", mv.timezoneStr(mv.params.Clock.Now()))
 		}
 
 		cell := newTableCellHeader(displayName)
@@ -1645,13 +1651,14 @@ func (mv *MainView) bumpTimeRange(updateHistogramRange bool) {
 		mv.to.Dur = -mv.to.Dur
 	}
 
-	mv.actualFrom = mv.from.AbsoluteTime(time.Now())
+	now := mv.params.Clock.Now()
+	mv.actualFrom = mv.from.AbsoluteTime(now)
 
 	if !mv.to.IsZero() {
-		mv.actualTo = mv.to.AbsoluteTime(time.Now())
+		mv.actualTo = mv.to.AbsoluteTime(now)
 		mv.actualToForQuery = mv.actualTo
 	} else {
-		mv.actualTo = time.Now()
+		mv.actualTo = now
 		mv.actualToForQuery = time.Time{}
 	}
 

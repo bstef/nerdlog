@@ -18,6 +18,12 @@ const inputTimeLayout = "Jan2 15:04"
 const inputTimeLayoutMMHH = "15:04"
 
 func main() {
+	appClock, err := newAppClock()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error initializing clock: %s\n", err)
+		os.Exit(1)
+	}
+
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error getting home dir: %s\n", err)
@@ -143,6 +149,7 @@ func main() {
 
 	app, err := newNerdlogApp(
 		nerdlogAppParams{
+			clock:                appClock,
 			initialOptionSets:    *flagSet,
 			initialQueryData:     initialQueryData,
 			connectRightAway:     connectRightAway,

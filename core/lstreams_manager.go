@@ -817,7 +817,7 @@ func (lsman *LStreamsManager) sendStateUpdate() {
 
 func (lsman *LStreamsManager) sendLogRespUpdate(resp *LogRespTotal) {
 	if lsman.curQueryLogsCtx != nil {
-		resp.QueryDur = time.Since(lsman.curQueryLogsCtx.startTime)
+		resp.QueryDur = lsman.params.Clock.Since(lsman.curQueryLogsCtx.startTime)
 	}
 
 	lsman.params.UpdatesCh <- LStreamsManagerUpdate{

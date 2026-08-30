@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/dimonomid/nerdlog/clhistory"
 	"github.com/gdamore/tcell/v2"
@@ -397,7 +396,7 @@ func (qev *QueryEditView) SetQueryFull(qf QueryFull) {
 	qev.selectQueryInput.SetText(string(qf.SelectQuery))
 
 	// TODO: instead of using now, better use beginning or end of the time range.
-	referenceTime := time.Now()
+	referenceTime := qev.mainView.params.Clock.Now()
 	qev.timezoneLabel.SetText(fmt.Sprintf("(%s)", qev.mainView.timezoneStr(referenceTime)))
 	qev.timeFlex.ResizeItem(qev.timezoneLabel, len(qev.timezoneLabel.GetText(true)), 0)
 }

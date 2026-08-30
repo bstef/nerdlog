@@ -18,7 +18,7 @@ test_steps:
 
   - descr: "start up"
     send_keys: [
-        'NERDLOG_NO_CLIPBOARD=1 TZ=UTC',
+        'NERDLOG_NO_CLIPBOARD=1 TZ=UTC USER=nerdlog-e2e-test NERDLOG_E2E_TEST_NOW=2025-06-01T00:00:00Z',
         ' ${NERDLOG_BINARY} --lstreams-config ${NERDLOG_LOGSTREAMS_CONFIG_FILE} --cmdhistory-file ${NERDLOG_TEST_OUTPUT_DIR}/cmd_history --queryhistory-file ${NERDLOG_TEST_OUTPUT_DIR}/query_history --set ''transport=custom:/bin/sh -c "/bin/sh -c sh"''',
         'C-m',
       ]
@@ -76,6 +76,10 @@ test_steps:
           replacement: 'Query took: XXXXXXXXXX'
 
   - descr: "get current value of transport again"
+    # The previous command reconnects asynchronously, but its expected screen is
+    # unchanged and can match before the reconnect has finished. Wait until focus
+    # has settled before sending the next command.
+    delay_before: "1s"
     send_keys: [
         ':set transport?',
         'C-m',
@@ -85,4 +89,3 @@ test_steps:
       substitutions:
         - pattern:     'Query took: .{1,10}'
           replacement: 'Query took: XXXXXXXXXX'
-

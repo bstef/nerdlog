@@ -18,7 +18,7 @@ test_steps:
 
   - descr: "start up"
     send_keys: [
-        'NERDLOG_NO_CLIPBOARD=1 TZ=UTC',
+        'NERDLOG_NO_CLIPBOARD=1 TZ=UTC USER=nerdlog-e2e-test NERDLOG_E2E_TEST_NOW=2025-06-01T00:00:00Z',
         ' ${NERDLOG_BINARY} --lstreams-config ${NERDLOG_LOGSTREAMS_CONFIG_FILE} --cmdhistory-file ${NERDLOG_TEST_OUTPUT_DIR}/cmd_history --queryhistory-file ${NERDLOG_TEST_OUTPUT_DIR}/query_history --set numlines=500',
         'C-m',
       ]

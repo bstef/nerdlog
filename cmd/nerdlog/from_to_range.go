@@ -13,7 +13,7 @@ type FromToRange struct {
 	To   TimeOrDur
 }
 
-func ParseFromToRange(timezone *time.Location, s string) (FromToRange, error) {
+func ParseFromToRange(timezone *time.Location, now time.Time, s string) (FromToRange, error) {
 	flds := strings.Split(s, " to ")
 	if len(flds) == 0 {
 		return FromToRange{}, errors.New("time can't be empty. try -5h")
@@ -24,7 +24,7 @@ func ParseFromToRange(timezone *time.Location, s string) (FromToRange, error) {
 
 	fromStr := flds[0]
 
-	from, err = parseAndInferTimeOrDur(timezone, inputTimeLayout, fromStr)
+	from, err = parseAndInferTimeOrDur(timezone, now, inputTimeLayout, fromStr)
 	if err != nil {
 		return FromToRange{}, errors.Annotatef(err, "invalid 'from' duration")
 	}
@@ -40,7 +40,7 @@ func ParseFromToRange(timezone *time.Location, s string) (FromToRange, error) {
 		}
 
 		var err error
-		to, err = parseAndInferTimeOrDur(timezone, inputTimeLayout, toStr)
+		to, err = parseAndInferTimeOrDur(timezone, now, inputTimeLayout, toStr)
 		if err != nil {
 			return FromToRange{}, errors.Annotatef(err, "invalid 'to' duration")
 		}
@@ -71,14 +71,14 @@ func (ftr *FromToRange) String() string {
 	return fromStr + " to " + ftr.To.Format(format)
 }
 
-func parseAndInferTimeOrDur(timezone *time.Location, layout, s string) (TimeOrDur, error) {
+func parseAndInferTimeOrDur(timezone *time.Location, now time.Time, layout, s string) (TimeOrDur, error) {
 	t, err := ParseTimeOrDur(timezone, layout, s)
 	if err != nil {
 		return TimeOrDur{}, err
 	}
 
 	if t.IsAbsolute() {
-		t.Time = core.InferYear(time.Now(), t.Time)
+		t.Time = core.InferYear(now, t.Time)
 	}
 
 	return t, nil

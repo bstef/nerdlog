@@ -48,6 +48,8 @@ type nerdlogApp struct {
 }
 
 type nerdlogAppParams struct {
+	clock clock.Clock
+
 	// initialOptionSets contains strings like "option=value",
 	// like "numlines=1000", in the same way one would execute them in a ":set"
 	// command.
@@ -73,6 +75,10 @@ type cmdWithOpts struct {
 func newNerdlogApp(
 	params nerdlogAppParams, queryCLHistory *clhistory.CLHistory,
 ) (*nerdlogApp, error) {
+	if params.clock == nil {
+		params.clock = clock.New()
+	}
+
 	logger := log.NewLogger(params.logLevel)
 
 	homeDir, err := os.UserHomeDir()
@@ -108,6 +114,7 @@ func newNerdlogApp(
 	app.mainView = NewMainView(&MainViewParams{
 		App:     app.tviewApp,
 		Options: app.options,
+		Clock:   params.clock,
 		OnLogQuery: func(params core.QueryLogsParams) {
 			params.MaxNumLines = app.options.GetMaxNumLines()
 
@@ -392,7 +399,7 @@ func (app *nerdlogApp) initLStreamsManager(
 
 		UpdatesCh: updatesCh,
 
-		Clock: clock.New(),
+		Clock: params.clock,
 	})
 
 	return nil

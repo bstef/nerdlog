@@ -826,7 +826,7 @@ func (lsc *LStreamClient) run() {
 			//}
 
 		case <-ticker.C:
-			if lsc.state == LStreamClientStateConnectedIdle && time.Since(lastUpdTime) > 40*time.Second {
+			if lsc.state == LStreamClientStateConnectedIdle && lsc.params.Clock.Since(lastUpdTime) > 40*time.Second {
 				lsc.startCmd(lstreamCmd{
 					ping: &lstreamCmdPing{},
 				})
