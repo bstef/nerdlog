@@ -98,13 +98,13 @@ func (st *ShellTransportSSHLib) doConnect(
 
 		conn, err := dialWithTimeout(jumphost, "tcp", connDetails.Host.Addr, connectionTimeout)
 		if err != nil {
-			res.Err = errors.Annotatef(err, conf.Descr)
+			res.Err = errors.Annotate(err, conf.Descr)
 			return res
 		}
 
 		authConn, chans, reqs, err := ssh.NewClientConn(conn, connDetails.Host.Addr, conf.ClientConfig)
 		if err != nil {
-			res.Err = errors.Annotatef(err, conf.Descr)
+			res.Err = errors.Annotate(err, conf.Descr)
 			return res
 		}
 
@@ -114,7 +114,7 @@ func (st *ShellTransportSSHLib) doConnect(
 		var err error
 		sshClient, err = ssh.Dial("tcp", connDetails.Host.Addr, conf.ClientConfig)
 		if err != nil {
-			res.Err = errors.Annotatef(err, conf.Descr)
+			res.Err = errors.Annotate(err, conf.Descr)
 			return res
 		}
 	}
@@ -128,31 +128,31 @@ func (st *ShellTransportSSHLib) doConnect(
 
 	sshSession, err := sshClient.NewSession()
 	if err != nil {
-		res.Err = errors.Annotatef(err, conf.Descr)
+		res.Err = errors.Annotate(err, conf.Descr)
 		return res
 	}
 
 	stdinBuf, err := sshSession.StdinPipe()
 	if err != nil {
-		res.Err = errors.Annotatef(err, conf.Descr)
+		res.Err = errors.Annotate(err, conf.Descr)
 		return res
 	}
 
 	stdoutBuf, err := sshSession.StdoutPipe()
 	if err != nil {
-		res.Err = errors.Annotatef(err, conf.Descr)
+		res.Err = errors.Annotate(err, conf.Descr)
 		return res
 	}
 
 	stderrBuf, err := sshSession.StderrPipe()
 	if err != nil {
-		res.Err = errors.Annotatef(err, conf.Descr)
+		res.Err = errors.Annotate(err, conf.Descr)
 		return res
 	}
 
 	err = sshSession.Start(shellBin)
 	if err != nil {
-		res.Err = errors.Annotatef(err, conf.Descr)
+		res.Err = errors.Annotate(err, conf.Descr)
 		return res
 	}
 

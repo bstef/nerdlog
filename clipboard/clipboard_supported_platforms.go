@@ -5,6 +5,7 @@
 package clipboard
 
 import (
+	"context"
 	"os"
 
 	"github.com/juju/errors"
@@ -30,5 +31,5 @@ func init() {
 // that we can avoid compiling it on unsupported platforms (e.g. FreeBSD) and
 // still have nerdlog working (without clipboard support).
 func WriteText(value []byte) {
-	clipboard.Write(clipboard.FmtText, value)
+	clipboard.Write(context.TODO(), clipboard.FmtText, value)
 }
